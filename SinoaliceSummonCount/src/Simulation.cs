@@ -1,8 +1,12 @@
 ﻿namespace SinoaliceSummonCount
 {
 
-    public class Simulation
+    public static class Simulation
     {
+
+        public static void Main()
+        {
+        }
 
     }
 
