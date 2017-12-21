@@ -1,7 +1,9 @@
 ﻿namespace SinoaliceSummonCount
 {
+
     public enum Job
     {
+
         Breaker,
         Crasher,
         Gunner,
@@ -9,5 +11,7 @@
         Minstrel,
         Sorcerer,
         Cleric,
+
     }
+
 }
