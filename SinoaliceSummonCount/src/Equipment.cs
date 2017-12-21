@@ -1,7 +1,7 @@
 ﻿namespace SinoaliceSummonCount
 {
 
-    public struct Deck
+    public struct Equipment
     {
 
         public int Sword;
