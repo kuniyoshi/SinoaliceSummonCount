@@ -14,7 +14,7 @@
 
         public int Wand;
 
-        public int MagicInstrument;
+        public int MusicInstrument;
 
         public int Book;
 
