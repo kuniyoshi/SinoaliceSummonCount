@@ -10,13 +10,17 @@
 
         public readonly BackendBuki BackendBuki;
 
+        public readonly int CounttoSummon;
+
         public Sinma(BackendBuki backendBuki,
                      FrontendBuki firstFrontendBuki,
-                     FrontendBuki secondFrontendBuki)
+                     FrontendBuki secondFrontendBuki, 
+                     int counttoSummon)
         {
             BackendBuki = backendBuki; 
             FirstFrontendBuki = firstFrontendBuki;
             SecondFrontendBuki = secondFrontendBuki;
+            CounttoSummon = counttoSummon;
         }
 
         public bool DoesPrefer(Buki buki)

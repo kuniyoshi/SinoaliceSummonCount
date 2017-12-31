@@ -45,7 +45,8 @@ namespace SinoaliceSummonCount
             var sinma = new Sinma(
                 BackendBuki.Wand,
                 FrontendBuki.Hammer,
-                FrontendBuki.Bow
+                FrontendBuki.Bow,
+                Constant.CountToSummon
             );
             List<Record> logs;
             logs = guid.Act(1, SinmaState.NoSign, sinma);

@@ -46,9 +46,9 @@ namespace SinoaliceSummonCount
                 select new Record(
                     id: id,
                     actor: member.Name,
-                    didSinmaPrefer: sinma.DoesPrefer(buki),
-                    didBlessed: sinmaState == SinmaState.Blessed,
-                    isStrong: Environment.DoesJobStrongWith(member.Job, buki))
+                    sinmaState: sinmaState,
+                    isStrong: Environment.DoesJobStrongWith(member.Job, buki),
+                    didSinmaPrefer: sinma.DoesPrefer(buki))
             ).ToList();
 
             _records.AddRange(records);
