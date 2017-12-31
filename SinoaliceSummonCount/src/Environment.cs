@@ -24,7 +24,6 @@ namespace SinoaliceSummonCount
 
         public static int RandomRange(int min, int max)
         {
-            Console.Out.WriteLine($"random range: {min}, {max}");
             return _random.Next(min, max);
         }
 

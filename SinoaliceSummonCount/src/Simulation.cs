@@ -25,7 +25,7 @@ namespace SinoaliceSummonCount
             }
 
             var filename = candidate;
-            
+
             Environment.GenRandom();
 
             using (var reader = new StreamReader(filename, Encoding.UTF8))
@@ -36,7 +36,7 @@ namespace SinoaliceSummonCount
 
                 Simulate(guid);
             }
-            
+
             Environment.DeleteRandom();
         }
 
@@ -48,17 +48,41 @@ namespace SinoaliceSummonCount
                 FrontendBuki.Bow,
                 Constant.CountToSummon
             );
-            List<Record> logs;
-            logs = guid.Act(1, SinmaState.NoSign, sinma);
-            Console.Out.WriteLine(string.Join(", ", logs));
-            logs = guid.Act(2, SinmaState.Signed, sinma);
-            Console.Out.WriteLine(string.Join(", ", logs));
-            logs = guid.Act(3, SinmaState.Signed, sinma);
-            Console.Out.WriteLine(string.Join(", ", logs));
-            logs = guid.Act(4, SinmaState.Signed, sinma);
-            Console.Out.WriteLine(string.Join(", ", logs));
-            logs = guid.Act(5, SinmaState.Summoning, sinma);
-            Console.Out.WriteLine(string.Join(", ", logs));
+            var summoningCount = 0;
+            var turn = 0;
+
+            Func<SinmaState> stateGenerator = () =>
+            {
+                if (turn < 20)
+                {
+                    return SinmaState.NoSign;
+                }
+                if (turn < 23)
+                {
+                    return SinmaState.Signed;
+                }
+                return SinmaState.Summoning;
+            };
+
+            while (summoningCount < Constant.CountToSummon)
+            {
+                var state = stateGenerator();
+                var logs = guid.Act(turn++, state, sinma);
+                Console.Out.WriteLine(string.Join(", ", logs));
+                summoningCount = summoningCount + CountValidSummoning(logs);
+            }
+
+            Console.Out.WriteLine($"turn: {turn-24}");
+        }
+
+        static int CountValidSummoning(List<Record> logs)
+        {
+            var count = logs.Count(r =>
+            {
+                var isSummoning = r.SinmaState == SinmaState.Summoning;
+                return isSummoning && r.DidSinmaPrefer;
+            });
+            return count;
         }
 
         static string Usage()
