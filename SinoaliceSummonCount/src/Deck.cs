@@ -58,7 +58,7 @@ namespace SinoaliceSummonCount
 
         public override string ToString()
         {
-            return $"{typeof(Deck)}{{Bukis: {string.Join(", ", _bukis)}}}";
+            return $"{typeof(Deck)}{{Bukis: {string.Join(", ", _bukis.Select(p => p.Second))}}}";
         }
 
         void InitializeBukis()

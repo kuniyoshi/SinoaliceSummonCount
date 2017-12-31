@@ -14,6 +14,11 @@
             Second = second;
         }
 
+        public override string ToString()
+        {
+            return $"{typeof(Pair<TFirst, TSecond>)}{{First: {First}, Second: {Second}}}";
+        }
+
     }
 
 }

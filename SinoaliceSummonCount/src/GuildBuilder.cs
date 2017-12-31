@@ -47,8 +47,6 @@ namespace SinoaliceSummonCount
                 .Select(int.Parse)
                 .ToArray();
             
-            Console.Out.WriteLine(string.Join(", ", bukis));
-
             var equipment = new Equipment(
                 sword: counts[0],
                 lance: counts[1],
@@ -60,8 +58,6 @@ namespace SinoaliceSummonCount
                 magicItem: counts[7]
             );
 
-            Console.Out.WriteLine(equipment);
-            
             var deck = new Deck(equipment);
 
             return deck;

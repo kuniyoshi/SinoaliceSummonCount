@@ -38,6 +38,13 @@
             return _backend.HasValue && _backend.Value == buki;
         }
 
+        public override string ToString()
+        {
+            return IsFrontend
+                ? $"{_frontend}"
+                : $"{_backend}";
+        }
+
     }
 
 }

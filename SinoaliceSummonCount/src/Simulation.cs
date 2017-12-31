@@ -29,6 +29,7 @@ namespace SinoaliceSummonCount
             {
                 var text = reader.ReadToEnd();
                 var guid = GuildBuilder.Build(text);
+                Console.Out.WriteLine(guid);
             }
         }
 
