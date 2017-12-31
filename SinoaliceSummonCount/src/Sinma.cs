@@ -4,11 +4,20 @@
     public struct Sinma
     {
 
-        public FrontendBuki FirstFrontendBuki;
-        
-        public FrontendBuki SecondFrontendBuki;
+        public readonly FrontendBuki FirstFrontendBuki;
 
-        public BackendBuki BackendBuki;
+        public readonly FrontendBuki SecondFrontendBuki;
+
+        public readonly BackendBuki BackendBuki;
+
+        public Sinma(BackendBuki backendBuki,
+                     FrontendBuki firstFrontendBuki,
+                     FrontendBuki secondFrontendBuki)
+        {
+            BackendBuki = backendBuki; 
+            FirstFrontendBuki = firstFrontendBuki;
+            SecondFrontendBuki = secondFrontendBuki;
+        }
 
         public bool DoesPrefer(Buki buki)
         {
@@ -20,7 +29,7 @@
 
             if (buki.IsBackend)
             {
-                return buki.IsSameAs(BackendBuki);                
+                return buki.IsSameAs(BackendBuki);
             }
 
             return false;

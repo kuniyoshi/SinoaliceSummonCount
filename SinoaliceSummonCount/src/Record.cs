@@ -27,6 +27,11 @@
             IsStrong = isStrong;
         }
 
+        public override string ToString()
+        {
+            return $"{Util.TrimNameSpace(typeof(Record).ToString())}{{Id: {Id}, Actor: {Actor}, IsString: {IsStrong}, DidSinmaPrefer: {DidSinmaPrefer}, DidBlessed: {DidBlessed}}}";
+        }
+
     }
 
 }

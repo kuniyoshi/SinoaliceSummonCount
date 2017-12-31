@@ -14,6 +14,11 @@ namespace SinoaliceSummonCount
             Bukis = bukis.ToArray();
         }
 
+        public override string ToString()
+        {
+            return $"{Util.TrimNameSpace(typeof(Slot).ToString())}{{Bukis: {string.Join(", ", Bukis.ToList())}}}";
+        }
+
     }
 
 }
