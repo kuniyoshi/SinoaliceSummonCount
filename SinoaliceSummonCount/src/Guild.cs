@@ -60,7 +60,7 @@ namespace SinoaliceSummonCount
         {
             var members = Members
                 .Select(m => m.ToString());
-            return $"{typeof(Guild)}{{Members: {string.Join(", ", members)}}}";
+            return $"{Util.TrimNameSpace(typeof(Guild).ToString())}{{Members: {string.Join(", ", members)}}}";
         }
 
     }

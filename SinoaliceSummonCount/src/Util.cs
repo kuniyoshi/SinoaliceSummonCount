@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SinoaliceSummonCount
 {
@@ -18,6 +19,12 @@ namespace SinoaliceSummonCount
                 list[i] = list[index];
                 list[index] = swapper;
             }
+        }
+
+        public static string TrimNameSpace(string nameSpaced)
+        {
+            var spritted = nameSpaced.Split('.');
+            return spritted.Last();
         }
 
     }
