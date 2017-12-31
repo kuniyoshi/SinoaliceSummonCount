@@ -83,6 +83,11 @@ namespace SinoaliceSummonCount
             return buki;
         }
 
+        public override string ToString()
+        {
+            return $"{typeof(Member)}{{Name: {Name}, Job: {Job}, Deck: {Deck}}}";
+        }
+
     }
 
 }

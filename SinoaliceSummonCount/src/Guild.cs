@@ -56,6 +56,13 @@ namespace SinoaliceSummonCount
             return records;
         }
 
+        public override string ToString()
+        {
+            var members = Members
+                .Select(m => m.ToString());
+            return $"{typeof(Guild)}{{Members: {string.Join(", ", members)}}}";
+        }
+
     }
 
 }

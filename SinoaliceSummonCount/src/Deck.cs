@@ -56,6 +56,11 @@ namespace SinoaliceSummonCount
             InitializeBukis();
         }
 
+        public override string ToString()
+        {
+            return $"{typeof(Deck)}{{Bukis: {string.Join(", ", _bukis)}}}";
+        }
+
         void InitializeBukis()
         {
             _bukis.Clear();

@@ -10,7 +10,7 @@ namespace SinoaliceSummonCount
         public static void Shuffle<T>(List<T> list)
         {
             var gen = new Random();
-            
+
             for (var i = list.Count - 1; i > 0; --i)
             {
                 var index = gen.Next(i);

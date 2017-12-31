@@ -4,21 +4,41 @@
     public struct Equipment
     {
 
-        public int Sword;
+        public readonly int Sword;
 
-        public int Lance;
+        public readonly int Lance;
 
-        public int Bow;
+        public readonly int Bow;
 
-        public int Hammer;
+        public readonly int Hammer;
 
-        public int Wand;
+        public readonly int Wand;
 
-        public int MusicInstrument;
+        public readonly int MusicInstrument;
 
-        public int Book;
+        public readonly int Book;
 
-        public int MagicItem;
+        public readonly int MagicItem;
+
+        public Equipment(int sword,
+                         int lance,
+                         int bow,
+                         int hammer,
+                         int wand,
+                         int musicInstrument,
+                         int book,
+                         int magicItem)
+        {
+            Sword = sword;
+            Lance = lance;
+            Bow = bow;
+            Hammer = hammer;
+            Wand = wand;
+            MusicInstrument = musicInstrument;
+            Book = book;
+            MagicItem = magicItem;
+        }
+
 
     }
 

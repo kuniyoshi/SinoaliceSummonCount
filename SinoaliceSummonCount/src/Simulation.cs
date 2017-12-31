@@ -28,7 +28,7 @@ namespace SinoaliceSummonCount
             using (var reader = new StreamReader(filename, Encoding.UTF8))
             {
                 var text = reader.ReadToEnd();
-                Console.Out.Write(text);
+                var guid = GuildBuilder.Build(text);
             }
         }
 
