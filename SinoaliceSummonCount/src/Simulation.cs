@@ -34,7 +34,9 @@ namespace SinoaliceSummonCount
                 var guid = GuildBuilder.Build(text);
 
                 var result = Simulate(guid);
+                var score = Environment.ParseResult(result);
                 Console.Out.WriteLine(result);
+                Console.Out.WriteLine(score);
             }
 
             Environment.DeleteRandom();

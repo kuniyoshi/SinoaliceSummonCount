@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SinoaliceSummonCount
 {
@@ -62,6 +64,23 @@ namespace SinoaliceSummonCount
             return log.IsStrong
                 ? Effect.Strong
                 : Effect.Normal;
+        }
+
+        public static Pair<int, int> ParseResult(Result result)
+        {
+            var map = new Dictionary<Effect, int>
+            {
+                {Effect.Normal, 3},
+                {Effect.Strong, 4},
+                {Effect.Blessed, 5},
+                {Effect.BlessedStrong, 6}
+            };
+            
+            var turn = result.RequiredTurn;
+            var score = result.Effects
+                .Sum(e => map[e]);
+            
+            return new Pair<int, int>(turn, score);
         }
 
     }
