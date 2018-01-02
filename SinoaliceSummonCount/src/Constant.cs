@@ -10,6 +10,8 @@
 
         public const int SlotSize = 4;
 
+        public const int TurnDuringSigning= 3;
+
     }
 
 }

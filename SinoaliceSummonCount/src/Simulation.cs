@@ -33,7 +33,10 @@ namespace SinoaliceSummonCount
                 var text = reader.ReadToEnd();
                 var guid = GuildBuilder.Build(text);
 
-                var result = Simulate(guid);
+                var result = Simulate(
+                    guid: guid,
+                    turnAtStartPreparing: 54
+                );
                 var score = Environment.ParseResult(result);
                 Console.Out.WriteLine(result);
                 Console.Out.WriteLine(score);
@@ -42,11 +45,9 @@ namespace SinoaliceSummonCount
             Environment.DeleteRandom();
         }
 
-        static Result Simulate(Guild guid)
+        static Result Simulate(Guild guid,
+                               int turnAtStartPreparing)
         {
-            const int prepareringTurn = 20;
-            const int signedTurn = 3;
-
             var sinma = new Sinma(
                 BackendBuki.Wand,
                 FrontendBuki.Hammer,
@@ -58,11 +59,11 @@ namespace SinoaliceSummonCount
 
             Func<SinmaState> stateGenerator = () =>
             {
-                if (turn < prepareringTurn)
+                if (turn < turnAtStartPreparing)
                 {
                     return SinmaState.NoSign;
                 }
-                if (turn < prepareringTurn + signedTurn)
+                if (turn < turnAtStartPreparing + Constant.TurnDuringSigning)
                 {
                     return SinmaState.Signed;
                 }
@@ -70,7 +71,7 @@ namespace SinoaliceSummonCount
             };
 
             var effects = new List<Effect>();
-            
+
             while (summoningCount < Constant.CountToSummon)
             {
                 var state = stateGenerator();
@@ -80,7 +81,7 @@ namespace SinoaliceSummonCount
             }
 
             var result = new Result(
-                requiredTurn: turn - signedTurn - prepareringTurn,
+                requiredTurn: turn - Constant.TurnDuringSigning - turnAtStartPreparing,
                 effects: effects.ToArray()
             );
 
