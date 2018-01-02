@@ -1,15 +1,9 @@
 ﻿namespace SinoaliceSummonCount
 {
 
-    public struct Effect
+    public enum Effect
     {
 
-        public readonly int Value;
-
-        public Effect(int value)
-        {
-            Value = value;
-        }
 
     }
 

@@ -8,9 +8,9 @@ namespace SinoaliceSummonCount
 
         static Random _random;
 
-        static readonly Effect PreferredEffect = new Effect(50);
+//        static readonly Effect PreferredEffect = new Effect(50);
 
-        static readonly Effect UnPreferredEffect = new Effect(30);
+//        static readonly Effect UnPreferredEffect = new Effect(30);
 
         public static void GenRandom()
         {

@@ -24,11 +24,9 @@ namespace SinoaliceSummonCount
 
         static Buki SelectUnPreferredBuki(Slot slot, Sinma sinma)
         {
-            Console.Out.WriteLine(slot);
             var candidates = slot.Bukis
                 .Where(buki => !sinma.DoesPrefer(buki))
                 .ToArray();
-            Console.Out.WriteLine(string.Join(", ", candidates.ToList()));
 
             if (!candidates.Any())
             {
@@ -36,7 +34,6 @@ namespace SinoaliceSummonCount
             }
 
             var index = Environment.RandomRange(0, candidates.Length);
-            Console.Out.WriteLine($"index: {index}, candidates.length: {candidates.Length}");
             return candidates[index];
         }
 

@@ -32,16 +32,19 @@ namespace SinoaliceSummonCount
             {
                 var text = reader.ReadToEnd();
                 var guid = GuildBuilder.Build(text);
-                Console.Out.WriteLine(guid);
 
-                Simulate(guid);
+                var result = Simulate(guid);
+                Console.Out.WriteLine(result);
             }
 
             Environment.DeleteRandom();
         }
 
-        static void Simulate(Guild guid)
+        static Result Simulate(Guild guid)
         {
+            const int prepareringTurn = 20;
+            const int signedTurn = 3;
+
             var sinma = new Sinma(
                 BackendBuki.Wand,
                 FrontendBuki.Hammer,
@@ -53,11 +56,11 @@ namespace SinoaliceSummonCount
 
             Func<SinmaState> stateGenerator = () =>
             {
-                if (turn < 20)
+                if (turn < prepareringTurn)
                 {
                     return SinmaState.NoSign;
                 }
-                if (turn < 23)
+                if (turn < prepareringTurn + signedTurn)
                 {
                     return SinmaState.Signed;
                 }
@@ -68,11 +71,17 @@ namespace SinoaliceSummonCount
             {
                 var state = stateGenerator();
                 var logs = guid.Act(turn++, state, sinma);
-                Console.Out.WriteLine(string.Join(", ", logs));
                 summoningCount = summoningCount + CountValidSummoning(logs);
             }
+            
+            var effects = new Effect[0];
 
-            Console.Out.WriteLine($"turn: {turn-24}");
+            var result = new Result(
+                requiredTurn: turn - signedTurn - prepareringTurn,
+                effects: effects
+            );
+
+            return result;
         }
 
         static int CountValidSummoning(List<Record> logs)
