@@ -50,6 +50,20 @@ namespace SinoaliceSummonCount
             }
         }
 
+        public static Effect ParseLog(Record log)
+        {
+            if (log.SinmaState == SinmaState.Blessed)
+            {
+                return log.IsStrong
+                    ? Effect.BlessedStrong
+                    : Effect.Blessed;
+            }
+
+            return log.IsStrong
+                ? Effect.Strong
+                : Effect.Normal;
+        }
+
     }
 
 }

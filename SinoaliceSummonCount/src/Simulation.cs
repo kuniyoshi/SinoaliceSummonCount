@@ -67,18 +67,19 @@ namespace SinoaliceSummonCount
                 return SinmaState.Summoning;
             };
 
+            var effects = new List<Effect>();
+            
             while (summoningCount < Constant.CountToSummon)
             {
                 var state = stateGenerator();
                 var logs = guid.Act(turn++, state, sinma);
                 summoningCount = summoningCount + CountValidSummoning(logs);
+                effects.AddRange(ParseEffects(logs));
             }
-            
-            var effects = new Effect[0];
 
             var result = new Result(
                 requiredTurn: turn - signedTurn - prepareringTurn,
-                effects: effects
+                effects: effects.ToArray()
             );
 
             return result;
@@ -92,6 +93,13 @@ namespace SinoaliceSummonCount
                 return isSummoning && r.DidSinmaPrefer;
             });
             return count;
+        }
+
+        static IEnumerable<Effect> ParseEffects(IEnumerable<Record> logs)
+        {
+            var list = logs.Select(Environment.ParseLog)
+                .ToList();
+            return list;
         }
 
         static string Usage()
