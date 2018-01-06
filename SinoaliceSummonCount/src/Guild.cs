@@ -24,32 +24,38 @@ namespace SinoaliceSummonCount
             _remainTurnToCompletePrepare = TurnToCompletePrepare;
         }
 
-        public List<Record> Act(int id, SinmaState sinmaState, Sinma sinma)
+        public List<Record> Act(int id, Sinma.Base sinma)
         {
-            if (sinmaState == SinmaState.NoSign)
+            if (sinma != null && sinma.SinmaState == SinmaState.NoSign)
             {
                 _remainTurnToCompletePrepare = TurnToCompletePrepare;
             }
 
-            if (sinmaState == SinmaState.Signed)
+            if (sinma != null && sinma.SinmaState == SinmaState.Signed)
             {
                 _remainTurnToCompletePrepare--;
             }
 
-            var sinmaCountDown = sinmaState == SinmaState.Signed
+            var sinmaCountDown = sinma != null && sinma.SinmaState == SinmaState.Signed
                 ? _remainTurnToCompletePrepare
                 : null;
 
-            var records = (
-                from member in Members
-                let buki = member.Act(sinmaState, sinmaCountDown, sinma)
-                select new Record(
+            var records = new List<Record>();
+            
+            foreach (var member in Members)
+            {
+                var buki = member.Act(sinmaCountDown, sinma);
+                var record = new Record(
                     id: id,
                     actor: member.Name,
-                    sinmaState: sinmaState,
+                    sinmaState: sinma?.SinmaState ?? SinmaState.NoSign,
                     isStrong: Environment.DoesJobStrongWith(member.Job, buki),
-                    didSinmaPrefer: sinma.DoesPrefer(buki))
-            ).ToList();
+                    didSinmaPrefer: sinma?.DoesPrefer(buki) ?? false
+                );
+                records.Add(record);
+                
+                sinma?.Watch(buki);
+            }
 
             _records.AddRange(records);
 

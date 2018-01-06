@@ -7,7 +7,7 @@ namespace SinoaliceSummonCount
     public class Member
     {
 
-        static Buki SelectPreferredBuki(Slot slot, Sinma sinma)
+        static Buki SelectPreferredBuki(Slot slot, Sinma.Base sinma)
         {
             var candidates = slot.Bukis
                 .Where(sinma.DoesPrefer)
@@ -22,7 +22,7 @@ namespace SinoaliceSummonCount
             return candidates[index];
         }
 
-        static Buki SelectUnPreferredBuki(Slot slot, Sinma sinma)
+        static Buki SelectUnPreferredBuki(Slot slot, Sinma.Base sinma)
         {
             var candidates = slot.Bukis
                 .Where(buki => !sinma.DoesPrefer(buki))
@@ -35,6 +35,12 @@ namespace SinoaliceSummonCount
 
             var index = Environment.RandomRange(0, candidates.Length);
             return candidates[index];
+        }
+
+        static Buki selectRandomBuki(Slot slot)
+        {
+            var index = Environment.RandomRange(0, slot.Bukis.Length);
+            return slot.Bukis[index];
         }
 
         public readonly Deck Deck;
@@ -50,7 +56,7 @@ namespace SinoaliceSummonCount
             Name = name;
         }
 
-        public Buki Act(SinmaState sinmaState, int? sinmaCountDown, Sinma sinma)
+        public Buki Act(int? sinmaCountDown, Sinma.Base sinma)
         {
             var slot = Deck.Open();
 
@@ -60,9 +66,14 @@ namespace SinoaliceSummonCount
                 return null;
             }
 
+            if (sinma == null)
+            {
+                return selectRandomBuki(slot);
+            }
+
             Buki buki;
 
-            switch (sinmaState)
+            switch (sinma.SinmaState)
             {
                 case SinmaState.NoSign:
                     buki = SelectUnPreferredBuki(slot, sinma);
