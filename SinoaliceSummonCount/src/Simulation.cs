@@ -37,23 +37,23 @@ namespace SinoaliceSummonCount
 
                 var result = Simulate(
                     guild: guild,
-                    turnAtStartFirstPreparing: 54,
-                    turnAtStartSecondPreparing: 123,
                     totalTurnDuringBattring: 160,
                     firstSinma: firstSinma,
                     secondSinma: secondSinma
                 );
-//                var score = Environment.CalculateScore(result);
+
+                Console.Out.WriteLine($"{firstSinma.Name} required {firstSinma.TurnCountToSummon}");
+                Console.Out.WriteLine($"{secondSinma.Name} required {secondSinma.TurnCountToSummon}");
+
+                var score = Environment.CalculateScore(result);
+                Console.Out.WriteLine($"score: {score}");
 //                Console.Out.WriteLine($"result: {result}");
-//                Console.Out.WriteLine($"score: {score}");
             }
 
             Environment.DeleteRandom();
         }
 
         static Result Simulate(Guild guild,
-                               int turnAtStartFirstPreparing,
-                               int turnAtStartSecondPreparing,
                                int totalTurnDuringBattring,
                                Sinma.Base firstSinma,
                                Sinma.Base secondSinma)
@@ -81,106 +81,15 @@ namespace SinoaliceSummonCount
                 firstSinma.PassTurn();
                 secondSinma.PassTurn();
             }
-            
-            Console.Out.WriteLine($"{firstSinma.Name} requied {firstSinma.TurnCountToSummon}");
-            Console.Out.WriteLine($"{secondSinma.Name} required {secondSinma.TurnCountToSummon}");
 
             var result = new Result(
-                0,
-                new Effect[0]
+                firstRequiredTurnCount: firstSinma.TurnCountToSummon,
+                secondRequiredTurnCount: secondSinma.TurnCountToSummon,
+                records: guild.Records
             );
 
-//            var remainedTurns = totalTurnDuringBattring;
-//            Console.Out.WriteLine($"remainedTurns: {remainedTurns}");
-//            var firstResult = SimulateOne(
-//                guild: guild,
-//                turnAtStartPreparing: turnAtStartFirstPreparing,
-//                summonedCount: 0,
-//                maxTurn: remainedTurns
-//            );
-//            Console.Out.WriteLine($"first result: {firstResult}");
-//            remainedTurns = remainedTurns - firstResult.PassedTurn;
-//            Console.Out.WriteLine($"remainedTurns: {remainedTurns}");
-//            var secondResult = SimulateOne(
-//                guild: guild,
-//                turnAtStartPreparing: turnAtStartSecondPreparing,
-//                summonedCount: 1,
-//                maxTurn: remainedTurns
-//            );
-//            Console.Out.WriteLine($"second result: {secondResult}");
-//            remainedTurns = remainedTurns - secondResult.PassedTurn;
-//            Console.Out.WriteLine($"remainedTurns: {remainedTurns}");
-//            var lastResult = SimulateOne(
-//                guild: guild,
-//                turnAtStartPreparing: totalTurnDuringBattring,
-//                summonedCount: 2,
-//                maxTurn: remainedTurns
-//            );
-//            Console.Out.WriteLine($"last result: {lastResult}");
-//            Console.Out.WriteLine($"remainedTurns: {remainedTurns}");
-//            var result = firstResult
-//                .Add(secondResult)
-//                .Add(lastResult);
             return result;
         }
-
-//        static Result SimulateOne(Guild guild,
-//                                  int turnAtStartPreparing,
-//                                  int summonedCount,
-//                                  int maxTurn)
-//        {
-//            var sinma = new Sinma(
-//                BackendBuki.Wand,
-//                FrontendBuki.Hammer,
-//                FrontendBuki.Bow,
-//                Constant.CountToSummon
-//            );
-//            var summoningCount = 0;
-//            var passedTurn = 0;
-//
-//            Func<int, SinmaState> stateGenerator;
-//
-//            if (!Environment.CanSummonInTheButtle(summonedCount))
-//            {
-//                stateGenerator = _ => SinmaState.NoSign;
-//            }
-//            else
-//            {
-//                stateGenerator = current =>
-//                {
-//                    if (current < turnAtStartPreparing)
-//                    {
-//                        return SinmaState.NoSign;
-//                    }
-//                    if (current < turnAtStartPreparing + Constant.TurnDuringSigning)
-//                    {
-//                        return SinmaState.Signed;
-//                    }
-//
-//                    // TODO: blessed state required
-//
-//                    return SinmaState.Summoning;
-//                };
-//            }
-//
-//            var effects = new List<Effect>();
-//
-//            while (summoningCount < Constant.CountToSummon && passedTurn < maxTurn)
-//            {
-//                var state = stateGenerator(passedTurn);
-//                var logs = guild.Act(passedTurn, state, sinma);
-//                summoningCount = summoningCount + CountValidSummoning(logs);
-//                effects.AddRange(ParseEffects(logs));
-//                passedTurn++;
-//            }
-//
-//            var result = new Result(
-//                passedTurn: passedTurn,
-//                effects: effects.ToArray()
-//            );
-//
-//            return result;
-//        }
 
         static int CountValidSummoning(IEnumerable<Record> logs)
         {

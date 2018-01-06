@@ -27,6 +27,11 @@ namespace SinoaliceSummonCount
             return spritted.Last();
         }
 
+        public static string TrimNameSpace<T>()
+        {
+            return TrimNameSpace(typeof(T).ToString());
+        }
+
     }
 
 }

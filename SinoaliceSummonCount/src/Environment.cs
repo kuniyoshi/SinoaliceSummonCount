@@ -76,8 +76,18 @@ namespace SinoaliceSummonCount
                 {Effect.BlessedStrong, 6}
             };
             
-            var score = result.Effects
-                .Sum(e => map[e]);
+            var score = result.Records
+                .Sum(r =>
+                {
+                    var e = r.IsStrong ? Effect.Strong : Effect.Normal;
+
+                    if (r.SinmaState == SinmaState.Blessed)
+                    {
+                        e = r.IsStrong ? Effect.BlessedStrong : Effect.Strong;
+                    }
+                    
+                    return map[e];
+                });
 
             return score;
         }
