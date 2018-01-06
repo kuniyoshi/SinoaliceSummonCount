@@ -10,9 +10,7 @@ namespace SinoaliceSummonCount
 
         static Random _random;
 
-//        static readonly Effect PreferredEffect = new Effect(50);
-
-//        static readonly Effect UnPreferredEffect = new Effect(30);
+        #region LifeCycle
 
         public static void GenRandom()
         {
@@ -24,9 +22,11 @@ namespace SinoaliceSummonCount
             _random = null;
         }
 
-        public static int RandomRange(int min, int max)
+        #endregion
+
+        public static bool CanSummonInTheButtle(int summonedCount)
         {
-            return _random.Next(min, max);
+            return summonedCount < 2;
         }
 
         public static bool DoesJobStrongWith(Job job, Buki buki)
@@ -66,7 +66,7 @@ namespace SinoaliceSummonCount
                 : Effect.Normal;
         }
 
-        public static Pair<int, int> ParseResult(Result result)
+        public static int CalculateScore(Result result)
         {
             var map = new Dictionary<Effect, int>
             {
@@ -76,11 +76,15 @@ namespace SinoaliceSummonCount
                 {Effect.BlessedStrong, 6}
             };
             
-            var turn = result.RequiredTurn;
             var score = result.Effects
                 .Sum(e => map[e]);
-            
-            return new Pair<int, int>(turn, score);
+
+            return score;
+        }
+
+        public static int RandomRange(int min, int max)
+        {
+            return _random.Next(min, max);
         }
 
     }

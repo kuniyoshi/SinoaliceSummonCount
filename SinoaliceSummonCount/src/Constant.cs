@@ -11,6 +11,8 @@
         public const int SlotSize = 4;
 
         public const int TurnDuringSigning= 3;
+        
+        public const int TurnDuringBlessed = 20;
 
     }
 

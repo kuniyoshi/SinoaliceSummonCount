@@ -18,7 +18,25 @@
 
 ## 前提
 
+- コロシアム時間は 20 分間
+
+### 神魔
+
+1. 雷公の厄災 (music instrumental, sword, lance)
+1. 日輪の厄災 (book, sword, lance)
+1. 氷雪の厄災 (wand, sword, lance)
+1. 流星の厄災 (music instrumental, hammer, bow) 
+1. 旋風の厄災 (book, hammer, bow)
+1. 震波の厄災 (wand, hammer, bow)
+
 ## 仮定
+
+- 1 回の行動時間は 4 秒間 
+- 神魔の効果時間は 2 分間
+
+### 神魔の効果時間は 2 分間
+
+神魔の効果時間がわからないのでとりあえず 2 分間に設定します。2 分間だと最大 30 回行動できます。SP 回復を考慮して 2 回とします。
 
 ## パラメータ
 
