@@ -24,11 +24,6 @@ namespace SinoaliceSummonCount
 
         #endregion
 
-        public static bool CanSummonInTheButtle(int summonedCount)
-        {
-            return summonedCount < 2;
-        }
-
         public static bool DoesJobStrongWith(Job job, Buki buki)
         {
             switch (job)
@@ -66,7 +61,7 @@ namespace SinoaliceSummonCount
                 : Effect.Normal;
         }
 
-        public static int CalculateScore(Result result)
+        public static float CalculateScore(Result result, int totalTurn)
         {
             var map = new Dictionary<Effect, int>
             {
@@ -75,26 +70,58 @@ namespace SinoaliceSummonCount
                 {Effect.Blessed, 5},
                 {Effect.BlessedStrong, 6}
             };
-            
+
             var score = result.Records
                 .Sum(r =>
                 {
-                    var e = r.IsStrong ? Effect.Strong : Effect.Normal;
-
-                    if (r.SinmaState == SinmaState.Blessed)
-                    {
-                        e = r.IsStrong ? Effect.BlessedStrong : Effect.Strong;
-                    }
-                    
+                    var e = ParseLog(r);
                     return map[e];
                 });
 
-            return score;
+            return (float) score / totalTurn;
         }
 
         public static int RandomRange(int min, int max)
         {
             return _random.Next(min, max);
+        }
+
+        public static Result Simulate(Guild guild,
+                               int totalTurnDuringBattring,
+                               Sinma.Base firstSinma,
+                               Sinma.Base secondSinma)
+        {
+            for (var turn = 0; turn < totalTurnDuringBattring; ++turn)
+            {
+                Sinma.Base sinma;
+
+                if (!firstSinma.DidGone)
+                {
+                    sinma = firstSinma;
+                }
+                else if (!secondSinma.DidGone)
+                {
+                    sinma = secondSinma;
+                }
+                else
+                {
+                    sinma = null;
+                }
+
+                var records = guild.Act(turn, sinma);
+                Console.Out.WriteLine($"records: {string.Join(", ", records)}");
+
+                firstSinma.PassTurn();
+                secondSinma.PassTurn();
+            }
+
+            var result = new Result(
+                firstRequiredTurnCount: firstSinma.TurnCountToSummon,
+                secondRequiredTurnCount: secondSinma.TurnCountToSummon,
+                records: guild.Records
+            );
+
+            return result;
         }
 
     }

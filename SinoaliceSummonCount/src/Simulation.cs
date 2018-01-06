@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -32,81 +31,27 @@ namespace SinoaliceSummonCount
             {
                 var text = reader.ReadToEnd();
                 var guild = GuildBuilder.Build(text);
-                var firstSinma = new Sinma.YakusaiOfHyosetsu(54);
-                var secondSinma = new Sinma.YakusaiOfRaiko(53);
+                var firstSinma = new Sinma.YakusaiOfHyosetsu(hidingTurnCount: 54);
+                var secondSinma = new Sinma.YakusaiOfRaiko(hidingTurnCount: 53);
+                var totalTurn = 160;
 
-                var result = Simulate(
+                var result = Environment.Simulate(
                     guild: guild,
-                    totalTurnDuringBattring: 160,
+                    totalTurnDuringBattring: totalTurn,
                     firstSinma: firstSinma,
                     secondSinma: secondSinma
                 );
 
-                Console.Out.WriteLine($"{firstSinma.Name} required {firstSinma.TurnCountToSummon}");
-                Console.Out.WriteLine($"{secondSinma.Name} required {secondSinma.TurnCountToSummon}");
+                Console.Out.WriteLine($"{firstSinma.Name} required {result.FirstRequiredTurnCount}");
+                Console.Out.WriteLine($"{secondSinma.Name} required {result.SecondRequiredTurnCount}");
 
-                var score = Environment.CalculateScore(result);
+                var score = Environment.CalculateScore(result, totalTurn);
                 Console.Out.WriteLine($"score: {score}");
-//                Console.Out.WriteLine($"result: {result}");
             }
 
             Environment.DeleteRandom();
         }
 
-        static Result Simulate(Guild guild,
-                               int totalTurnDuringBattring,
-                               Sinma.Base firstSinma,
-                               Sinma.Base secondSinma)
-        {
-            for (var turn = 0; turn < totalTurnDuringBattring; ++turn)
-            {
-                Sinma.Base sinma;
-
-                if (!firstSinma.DidGone)
-                {
-                    sinma = firstSinma;
-                }
-                else if (!secondSinma.DidGone)
-                {
-                    sinma = secondSinma;
-                }
-                else
-                {
-                    sinma = null;
-                }
-
-                var records = guild.Act(turn, sinma);
-                Console.Out.WriteLine($"records: {string.Join(", ", records)}");
-
-                firstSinma.PassTurn();
-                secondSinma.PassTurn();
-            }
-
-            var result = new Result(
-                firstRequiredTurnCount: firstSinma.TurnCountToSummon,
-                secondRequiredTurnCount: secondSinma.TurnCountToSummon,
-                records: guild.Records
-            );
-
-            return result;
-        }
-
-        static int CountValidSummoning(IEnumerable<Record> logs)
-        {
-            var count = logs.Count(r =>
-            {
-                var isSummoning = r.SinmaState == SinmaState.Summoning;
-                return isSummoning && r.DidSinmaPrefer;
-            });
-            return count;
-        }
-
-        static IEnumerable<Effect> ParseEffects(IEnumerable<Record> logs)
-        {
-            var list = logs.Select(Environment.ParseLog)
-                .ToList();
-            return list;
-        }
 
         static string Usage()
         {
