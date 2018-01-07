@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 namespace SinoaliceSummonCount
 {
@@ -37,7 +36,7 @@ namespace SinoaliceSummonCount
             return candidates[index];
         }
 
-        static Buki selectRandomBuki(Slot slot)
+        static Buki SelectRandomBuki(Slot slot)
         {
             var index = Environment.RandomRange(0, slot.Bukis.Length);
             return slot.Bukis[index];
@@ -68,7 +67,7 @@ namespace SinoaliceSummonCount
 
             if (sinma == null)
             {
-                return selectRandomBuki(slot);
+                return SelectRandomBuki(slot);
             }
 
             Buki buki;
