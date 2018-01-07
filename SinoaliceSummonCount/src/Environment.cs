@@ -26,6 +26,11 @@ namespace SinoaliceSummonCount
 
         public static bool DoesJobStrongWith(Job job, Buki buki)
         {
+            if (buki == null)
+            {
+                return false;
+            }
+            
             switch (job)
             {
                 case Job.Breaker:

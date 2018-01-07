@@ -64,6 +64,11 @@ namespace SinoaliceSummonCount.Sinma
 
         public bool DoesPrefer(Buki buki)
         {
+            if (buki == null)
+            {
+                return false;
+            }
+            
             return buki.IsSameAs(PreferredBackendBuki)
                    || buki.IsSameAs(FirstPreferredFrontendBuki)
                    || buki.IsSameAs(SecondPreferredFrontendBuki);
@@ -115,6 +120,11 @@ namespace SinoaliceSummonCount.Sinma
 
         public void Watch(Buki buki)
         {
+            if (buki == null)
+            {
+                return;
+            }
+            
             switch (SinmaState)
             {
                 case SinmaState.NoSign:

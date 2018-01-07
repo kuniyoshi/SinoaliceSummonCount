@@ -6,40 +6,48 @@ namespace SinoaliceSummonCount
     public class Member
     {
 
-        static Buki SelectPreferredBuki(Slot slot, Sinma.Base sinma)
+        static int SelectPreferredBuki(Slot slot, Sinma.Base sinma)
         {
             var candidates = slot.Bukis
-                .Where(sinma.DoesPrefer)
+                .Select((b, i) => new {Buki = b, Index = i})
+                .Where(b => sinma.DoesPrefer(b.Buki))
                 .ToArray();
 
             if (!candidates.Any())
             {
-                candidates = slot.Bukis;
+                candidates = slot.Bukis
+                    .Select((b, i) => new {Buki = b, Index = i})
+                    .ToArray();
             }
 
             var index = Environment.RandomRange(0, candidates.Length);
-            return candidates[index];
+
+            return candidates[index].Index;
         }
 
-        static Buki SelectUnPreferredBuki(Slot slot, Sinma.Base sinma)
+        static int SelectUnPreferredBuki(Slot slot, Sinma.Base sinma)
         {
             var candidates = slot.Bukis
-                .Where(buki => !sinma.DoesPrefer(buki))
+                .Select((b, i) => new {Buki = b, Index = i})
+                .Where(b => !sinma.DoesPrefer(b.Buki))
                 .ToArray();
 
             if (!candidates.Any())
             {
-                candidates = slot.Bukis;
+                candidates = slot.Bukis
+                    .Select((b, i) => new {Buki = b, Index = i})
+                    .ToArray();
             }
 
             var index = Environment.RandomRange(0, candidates.Length);
-            return candidates[index];
+            
+            return candidates[index].Index;
         }
 
-        static Buki SelectRandomBuki(Slot slot)
+        static int SelectRandomBuki(Slot slot)
         {
             var index = Environment.RandomRange(0, slot.Bukis.Length);
-            return slot.Bukis[index];
+            return index;
         }
 
         public readonly Deck Deck;
@@ -65,31 +73,29 @@ namespace SinoaliceSummonCount
                 return null;
             }
 
-            if (sinma == null)
-            {
-                return SelectRandomBuki(slot);
-            }
+            int? index;
 
-            Buki buki;
-
-            switch (sinma.SinmaState)
+            switch (sinma?.SinmaState ?? SinmaState.NoSign)
             {
                 case SinmaState.NoSign:
-                    buki = SelectUnPreferredBuki(slot, sinma);
+                    index = SelectUnPreferredBuki(slot, sinma);
                     break;
                 case SinmaState.Signed:
-                    buki = SelectUnPreferredBuki(slot, sinma);
+                    index = SelectUnPreferredBuki(slot, sinma);
                     break;
                 case SinmaState.Summoning:
-                    buki = SelectPreferredBuki(slot, sinma);
+                    index = SelectPreferredBuki(slot, sinma);
                     break;
                 case SinmaState.Blessed:
-                    buki = SelectPreferredBuki(slot, sinma);
+                    index = SelectPreferredBuki(slot, sinma);
                     break;
                 default:
-                    buki = SelectUnPreferredBuki(slot, sinma);
+                    index = SelectRandomBuki(slot);
                     break;
             }
+
+            var buki = slot.Bukis[index.Value];
+            Deck.ConsumeAtSlotIndex(index.Value);
 
             return buki;
         }

@@ -45,6 +45,12 @@ namespace SinoaliceSummonCount
             foreach (var member in Members)
             {
                 var buki = member.Act(sinmaCountDown, sinma);
+
+                if (buki == null)
+                {
+                    continue;
+                }
+                
                 var record = new Record(
                     id: id,
                     actor: member.Name,
@@ -52,6 +58,7 @@ namespace SinoaliceSummonCount
                     isStrong: Environment.DoesJobStrongWith(member.Job, buki),
                     didSinmaPrefer: sinma?.DoesPrefer(buki) ?? false
                 );
+                
                 records.Add(record);
                 
                 sinma?.Watch(buki);

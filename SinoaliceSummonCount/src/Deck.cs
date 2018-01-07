@@ -21,8 +21,6 @@ namespace SinoaliceSummonCount
 
         readonly Equipment _equipment;
 
-        int _cursor;
-
         public Deck(Equipment equipment)
         {
             _equipment = equipment;
@@ -47,7 +45,8 @@ namespace SinoaliceSummonCount
                 .Where(p => p.First == Status.UnUsed)
                 .Select(p => p.Second)
                 .ToList();
-            var slot = new Slot(candidate.GetRange(_cursor, Constant.SlotSize));
+            
+            var slot = new Slot(candidate.Take(Constant.SlotSize));
             return slot;
         }
 
@@ -92,7 +91,6 @@ namespace SinoaliceSummonCount
             addRangeBackend(_equipment.MagicItem, BackendBuki.MagicItem);
 
             Util.Shuffle(_bukis);
-            _cursor = 0;
         }
 
     }
