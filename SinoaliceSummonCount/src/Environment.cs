@@ -30,7 +30,7 @@ namespace SinoaliceSummonCount
             {
                 return false;
             }
-            
+
             switch (job)
             {
                 case Job.Breaker:
@@ -52,7 +52,27 @@ namespace SinoaliceSummonCount
             }
         }
 
-        public static Effect ParseLog(Record log)
+        public static float CalculateScore(Result result, int totalTurn)
+        {
+            var map = new Dictionary<Effect, float>
+            {
+                {Effect.Normal, Constant.EffectValueOfNormal},
+                {Effect.Strong, Constant.EffectValueOfStrong},
+                {Effect.Blessed, Constant.EffectValueOfBlessed},
+                {Effect.BlessedStrong, Constant.EffectValueOfStrongBlessed}
+            };
+
+            var score = result.Records
+                .Sum(r =>
+                {
+                    var e = GetEffectOf(r);
+                    return map[e];
+                });
+
+            return score / totalTurn;
+        }
+
+        public static Effect GetEffectOf(Record log)
         {
             if (log.SinmaState == SinmaState.Blessed)
             {
@@ -66,35 +86,15 @@ namespace SinoaliceSummonCount
                 : Effect.Normal;
         }
 
-        public static float CalculateScore(Result result, int totalTurn)
-        {
-            var map = new Dictionary<Effect, int>
-            {
-                {Effect.Normal, 3},
-                {Effect.Strong, 4},
-                {Effect.Blessed, 5},
-                {Effect.BlessedStrong, 6}
-            };
-
-            var score = result.Records
-                .Sum(r =>
-                {
-                    var e = ParseLog(r);
-                    return map[e];
-                });
-
-            return (float) score / totalTurn;
-        }
-
         public static int RandomRange(int min, int max)
         {
             return _random.Next(min, max);
         }
 
         public static Result Simulate(Guild guild,
-                               int totalTurnDuringBattring,
-                               Sinma.Base firstSinma,
-                               Sinma.Base secondSinma)
+                                      int totalTurnDuringBattring,
+                                      Sinma.Base firstSinma,
+                                      Sinma.Base secondSinma)
         {
             for (var turn = 0; turn < totalTurnDuringBattring; ++turn)
             {

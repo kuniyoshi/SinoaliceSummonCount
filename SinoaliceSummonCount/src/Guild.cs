@@ -7,8 +7,6 @@ namespace SinoaliceSummonCount
     public class Guild
     {
 
-        const int TurnToCompletePrepare = 3 + 1; // first move takes one turn
-
         public readonly Member[] Members;
 
         int? _remainTurnToCompletePrepare;
@@ -21,14 +19,14 @@ namespace SinoaliceSummonCount
         {
             Members = members;
             _records = new List<Record>();
-            _remainTurnToCompletePrepare = TurnToCompletePrepare;
+            _remainTurnToCompletePrepare = Constant.TurnToCompletePrepare;
         }
 
         public List<Record> Act(int id, Sinma.Base sinma)
         {
             if (sinma != null && sinma.SinmaState == SinmaState.NoSign)
             {
-                _remainTurnToCompletePrepare = TurnToCompletePrepare;
+                _remainTurnToCompletePrepare = Constant.TurnToCompletePrepare;
             }
 
             if (sinma != null && sinma.SinmaState == SinmaState.Signed)
@@ -59,9 +57,9 @@ namespace SinoaliceSummonCount
                     didSinmaPrefer: sinma?.DoesPrefer(buki) ?? false
                 );
                 
-                records.Add(record);
-                
                 sinma?.Watch(buki);
+                
+                records.Add(record);
             }
 
             _records.AddRange(records);
@@ -73,7 +71,7 @@ namespace SinoaliceSummonCount
         {
             var members = Members
                 .Select(m => m.ToString());
-            return $"{Util.TrimNameSpace(typeof(Guild).ToString())}{{Members: {string.Join(", ", members)}}}";
+            return $"{Util.TrimNameSpace<Guild>()}{{Members: {string.Join(", ", members)}}}";
         }
 
     }

@@ -16,7 +16,7 @@ namespace SinoaliceSummonCount
 
         public override string ToString()
         {
-            return $"{Util.TrimNameSpace(typeof(Slot).ToString())}{{Bukis: {string.Join(", ", Bukis.ToList())}}}";
+            return $"{Util.TrimNameSpace<Slot>()}{{Bukis: {string.Join(", ", Bukis.ToList())}}}";
         }
 
     }

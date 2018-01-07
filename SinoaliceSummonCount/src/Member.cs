@@ -102,7 +102,7 @@ namespace SinoaliceSummonCount
 
         public override string ToString()
         {
-            return $"{Util.TrimNameSpace(typeof(Member).ToString())}{{Name: {Name}, Job: {Job}, Deck: {Deck}}}";
+            return $"{Util.TrimNameSpace<Member>()}{{Name: {Name}, Job: {Job}, Deck: {Deck}}}";
         }
 
     }

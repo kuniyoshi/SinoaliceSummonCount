@@ -13,7 +13,6 @@ namespace SinoaliceSummonCount
 
             UnUsed,
             Consumed,
-            Empty,
 
         }
         
@@ -44,9 +43,10 @@ namespace SinoaliceSummonCount
             var candidate = _bukis
                 .Where(p => p.First == Status.UnUsed)
                 .Select(p => p.Second)
-                .ToList();
+                .Take(Constant.SlotSize);
+
+            var slot = new Slot(candidate);
             
-            var slot = new Slot(candidate.Take(Constant.SlotSize));
             return slot;
         }
 
@@ -57,7 +57,7 @@ namespace SinoaliceSummonCount
 
         public override string ToString()
         {
-            return $"{Util.TrimNameSpace(typeof(Deck).ToString())}{{Bukis: {string.Join(", ", _bukis.Select(p => p.Second))}}}";
+            return $"{Util.TrimNameSpace<Deck>()}{{Bukis: {string.Join(", ", _bukis.Select(p => p.Second))}}}";
         }
 
         void InitializeBukis()

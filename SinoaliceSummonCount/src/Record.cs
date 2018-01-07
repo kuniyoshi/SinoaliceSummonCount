@@ -29,7 +29,7 @@
 
         public override string ToString()
         {
-            return $"{Util.TrimNameSpace(typeof(Record).ToString())}{{Id: {Id}, Actor: {Actor}, SinmaState: {SinmaState}, IsStrong: {IsStrong}, DidSinmaPrefer: {DidSinmaPrefer}}}";
+            return $"{Util.TrimNameSpace<Record>()}{{Id: {Id}, Actor: {Actor}, SinmaState: {SinmaState}, IsStrong: {IsStrong}, DidSinmaPrefer: {DidSinmaPrefer}}}";
         }
 
     }
