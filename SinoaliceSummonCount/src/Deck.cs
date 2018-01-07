@@ -27,15 +27,13 @@ namespace SinoaliceSummonCount
             InitializeBukis();
         }
 
-        public void ConsumeAtSlotIndex(int index)
+        public void ConsumeBuki(Buki buki)
         {
-            var slot = Open();
-            var buki = slot.Bukis[index];
-            var deckIndex = _bukis.FindIndex(p => p.Second.Id == buki.Id);
-            var pair = _bukis[deckIndex];
+            var index = _bukis.FindIndex(p => p.Second.Id == buki.Id);
+            var pair = _bukis[index];
             pair.First = Status.Consumed;
 
-            _bukis[deckIndex] = pair;
+            _bukis[index] = pair;
         }
 
         public Slot Open()
