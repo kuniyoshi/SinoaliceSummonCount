@@ -109,10 +109,10 @@ namespace SinoaliceSummonCount
                 }
 
                 var records = guild.Act(turn, sinma);
-                Console.Out.WriteLine($"records: {string.Join(", ", records)}");
+//                Console.Out.WriteLine($"records: {string.Join(", ", records)}");
+                Console.Out.WriteLine($"records count: {records.Count}");
 
-                firstSinma.PassTurn();
-                secondSinma.PassTurn();
+                sinma?.PassTurn();
             }
 
             var result = new Result(
@@ -122,6 +122,19 @@ namespace SinoaliceSummonCount
             );
 
             return result;
+        }
+
+        public static string[] Summarize(IReadOnlyList<Record> records)
+        {
+            var summary = records.Where(r => r.SinmaState == SinmaState.Summoning)
+                .GroupBy(r => r.Id)
+                .Select(g =>
+                {
+                    var members = g.Select(l => $"{l.DidSinmaPrefer}")
+                        .ToArray();
+                    return $"{g.Key}: {string.Join(", ", members)}";
+                }).ToArray();
+            return summary;
         }
 
     }

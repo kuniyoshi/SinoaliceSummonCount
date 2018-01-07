@@ -47,6 +47,9 @@ namespace SinoaliceSummonCount
 
                 var score = Environment.CalculateScore(result, totalTurn);
                 Console.Out.WriteLine($"score: {score}");
+
+                var summary = Environment.Summarize(result.Records);
+                Console.Out.WriteLine($"summary: {string.Join("\n", summary)}");
             }
 
             Environment.DeleteRandom();
