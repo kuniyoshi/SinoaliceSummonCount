@@ -114,8 +114,6 @@ namespace SinoaliceSummonCount
                 }
 
                 var records = guild.Act(turn, sinma);
-//                Console.Out.WriteLine($"records: {string.Join(", ", records)}");
-                Console.Out.WriteLine($"records count: {records.Count}");
 
                 sinma?.PassTurn();
             }
