@@ -12,9 +12,9 @@
 
         public const float EffectValueOfStrong = 1.1f;
 
-        public const float EffectValueOfBlessed = 1.5f;
+        public const float EffectValueOfBlessed = 2f;
 
-        public const float EffectValueOfStrongBlessed = 1.6f;
+        public const float EffectValueOfStrongBlessed = 2.2f;
 
         public const int OpponentSummoningCount = 10;
 
