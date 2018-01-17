@@ -16,6 +16,8 @@
 
         public const float EffectValueOfStrongBlessed = 1.6f;
 
+        public const int OpponentSummoningCount = 10;
+
         public const int SlotSize = 4;
 
         public const int TurnDuringSigning = 3;

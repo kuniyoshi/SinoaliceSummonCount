@@ -42,11 +42,23 @@ namespace SinoaliceSummonCount.Sinma
 
         readonly TurnCount _turnCount;
 
+        bool _didGoneToOpponent;
+
         public bool DidGone => _didGone;
 
         public SinmaState SinmaState => _sinmaState;
 
-        public int TurnCountToSummon => _turnCount.Summoning;
+        public int? TurnCountToSummon
+        {
+            get 
+            {
+                if (_didGoneToOpponent)
+                {
+                    return null;
+                }
+                return _turnCount.Summoning;
+            }
+        }
 
         protected Base(BackendBuki preferredBackendBuki,
                        FrontendBuki firstPreferredFrontendBuki,
@@ -104,6 +116,14 @@ namespace SinoaliceSummonCount.Sinma
             if (SinmaState == SinmaState.Summoning)
             {
                 _turnCount.Summoning++;
+
+                if (_turnCount.Summoning > Constant.OpponentSummoningCount)
+                {
+                    _didGoneToOpponent = true;
+                    _sinmaState = SinmaState.NoSign;
+                    _didGone = true;
+                    return;
+                }
             }
 
             if (SinmaState == SinmaState.Blessed)

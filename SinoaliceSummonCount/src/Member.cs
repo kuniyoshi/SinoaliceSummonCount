@@ -69,7 +69,7 @@ namespace SinoaliceSummonCount
 
             Buki buki;
 
-            switch (sinma?.SinmaState ?? SinmaState.NoSign)
+            switch (sinma?.SinmaState)
             {
                 case SinmaState.NoSign:
                     buki = SelectUnPreferredBuki(slot, sinma);
@@ -82,6 +82,9 @@ namespace SinoaliceSummonCount
                     break;
                 case SinmaState.Blessed:
                     buki = SelectPreferredBuki(slot, sinma);
+                    break;
+                case null:
+                    buki = SelectRandomBuki(slot);
                     break;
                 default:
                     buki = SelectRandomBuki(slot);
