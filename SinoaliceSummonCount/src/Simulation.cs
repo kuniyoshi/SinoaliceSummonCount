@@ -29,17 +29,18 @@ namespace SinoaliceSummonCount
 
             using (var reader = new StreamReader(filename, Encoding.UTF8))
             {
+                var sinmaString = reader.ReadLine();
                 var text = reader.ReadToEnd();
+                
+                var sinma = SinmaBuilder.Build(sinmaString);
                 var guild = GuildBuilder.Build(text);
-                var firstSinma = new Sinma.YakusaiOfHyosetsu(hidingTurnCount: 54);
-                var secondSinma = new Sinma.YakusaiOfRaiko(hidingTurnCount: 53);
                 var totalTurn = 160;
 
                 var result = Environment.Simulate(
                     guild: guild,
                     totalTurnDuringBattring: totalTurn,
-                    firstSinma: firstSinma,
-                    secondSinma: secondSinma
+                    firstSinma: sinma.First,
+                    secondSinma: sinma.Second
                 );
 
 //                Console.Out.WriteLine($"{firstSinma.Name} required {result.FirstRequiredTurnCount}");
