@@ -42,14 +42,22 @@ namespace SinoaliceSummonCount
                     secondSinma: secondSinma
                 );
 
-                Console.Out.WriteLine($"{firstSinma.Name} required {result.FirstRequiredTurnCount}");
-                Console.Out.WriteLine($"{secondSinma.Name} required {result.SecondRequiredTurnCount}");
+//                Console.Out.WriteLine($"{firstSinma.Name} required {result.FirstRequiredTurnCount}");
+//                Console.Out.WriteLine($"{secondSinma.Name} required {result.SecondRequiredTurnCount}");
 
                 var score = Environment.CalculateScore(result, totalTurn);
-                Console.Out.WriteLine($"score: {score}");
+//                Console.Out.WriteLine($"score: {score}");
 
                 var summary = Environment.Summarize(result.Records);
-                Console.Out.WriteLine($"summary: {string.Join("\n", summary)}");
+//                Console.Out.WriteLine($"summary: {string.Join("\n", summary)}");
+
+                var output = string.Join(
+                    "\t",
+                    result.FirstRequiredTurnCount.HasValue ? result.FirstRequiredTurnCount.Value.ToString() : "NULL",
+                    result.SecondRequiredTurnCount.HasValue ? result.SecondRequiredTurnCount.Value.ToString() : "NULL",
+                    score
+                );
+                Console.Out.WriteLine(output);
             }
 
             Environment.DeleteRandom();
