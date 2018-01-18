@@ -12,7 +12,9 @@ namespace SinoaliceSummonCount
             Environment.GenRandom();
 
             var sinmaString = ReadLine();
+//            Console.Out.WriteLine($"sinma string: {sinmaString}");
             var text = ReadToEnd();
+//            Console.Out.WriteLine($"text: {text}");
 
             var sinma = SinmaBuilder.Build(sinmaString);
             var guild = GuildBuilder.Build(text);
