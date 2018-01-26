@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{117D0F54-CC58-4F17-9597-9C92AAD41340}</ProjectGuid>
+    <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SinoaliceSummonCount</RootNamespace>
+    <AssemblyName>SinoaliceSummonCount</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="src\BackendBuki.cs" />
+    <Compile Include="src\Buki.cs" />
+    <Compile Include="src\Constant.cs" />
+    <Compile Include="src\Deck.cs" />
+    <Compile Include="src\Effect.cs" />
+    <Compile Include="src\Environment.cs" />
+    <Compile Include="src\Equipment.cs" />
+    <Compile Include="src\FrontendBuki.cs" />
+    <Compile Include="src\Guild.cs" />
+    <Compile Include="src\GuildBuilder.cs" />
+    <Compile Include="src\Job.cs" />
+    <Compile Include="src\Record.cs" />
+    <Compile Include="src\Member.cs" />
+    <Compile Include="src\Pair.cs" />
+    <Compile Include="src\Result.cs" />
+    <Compile Include="src\Simulation.cs" />
+    <Compile Include="src\SinmaBuilder.cs" />
+    <Compile Include="src\SinmaState.cs" />
+    <Compile Include="src\Sinma\Base.cs" />
+    <Compile Include="src\Sinma\YakusaiOfHyosetsu.cs" />
+    <Compile Include="src\Sinma\YakusaiOfNichirin.cs" />
+    <Compile Include="src\Sinma\YakusaiOfRaiko.cs" />
+    <Compile Include="src\Sinma\YakusaiOfRyusei.cs" />
+    <Compile Include="src\Sinma\YakusaiOfSenpu.cs" />
+    <Compile Include="src\Sinma\YakusaiOfSinpa.cs" />
+    <Compile Include="src\Slot.cs" />
+    <Compile Include="src\Util.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="README.md" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
